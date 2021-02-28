@@ -2,6 +2,7 @@ import * as Joi from 'joi';
 
 export const validationSchema = Joi.object({
   API_KEY: Joi.string().required(),
+  API_URL: Joi.string().required(),
   CITIES: Joi.string()
     .pattern(/^(?:[\w\s]+,\w{2}\|)*[\w\s]+,\w{2}$/)
     .required(),
