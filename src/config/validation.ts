@@ -9,4 +9,6 @@ export const validationSchema = Joi.object({
   INTERVAL: Joi.number().min(10000).default(120000),
   MIN_TEMP: Joi.number().required(),
   MONGODB_URI: Joi.string().required(),
+  DB_USERNAME: Joi.string().required(),
+  DB_PASS: Joi.string().required(),
 });
