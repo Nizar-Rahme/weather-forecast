@@ -1,8 +1,14 @@
 export const configuration = () => ({
-  API_KEY: process.env.API_KEY,
-  API_URL: process.env.API_URL,
-  CITIES: process.env.CITIES,
-  INTERVAL: process.env.INTERVAL,
-  MIN_TEMP: process.env.MIN_TEMP,
-  MONGODB_URI: process.env.MONGODB_URI,
+  forecastAPI: {
+    url: process.env.API_URL,
+    key: process.env.API_KEY,
+  },
+  database: {
+    uri: process.env.MONGODB_URI,
+  },
+  config: {
+    cities: process.env.CITIES.split('|').map((city) => city.split(',')),
+    interval: Number(process.env.INTERVAL),
+    lowTempLimit: Number(process.env.MIN_TEMP),
+  },
 });
