@@ -78,7 +78,7 @@ $ yarn
 
 ## Running the app
 
-1. Make sure that the port `3000` is not occupied
+1. Make sure that the port `3000` is not already allocated
 
 2. Run the following command after configuring the application properly
 
