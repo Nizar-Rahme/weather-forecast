@@ -25,4 +25,6 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
+HEALTHCHECK CMD curl -f http://localhost:3000/health || exit 1
+
 CMD ["node", "dist/main"]

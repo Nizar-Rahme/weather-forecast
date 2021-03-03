@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { CitiesModule } from './cities/cities.module';
 import { ForecastModule } from './forecast/forecast.module';
 import { SchedulerModule } from './scheduler/scheduler.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { SchedulerModule } from './scheduler/scheduler.module';
     CitiesModule,
     ForecastModule,
     SchedulerModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

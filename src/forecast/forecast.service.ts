@@ -24,14 +24,14 @@ interface IForecast {
 
 @Injectable()
 export class ForecastService {
-  private readonly url = this.configService.get<string>('forecastAPI.url');
-  private readonly key = this.configService.get<string>('forecastAPI.key');
-
   constructor(
     private configService: ConfigService,
     private httpService: HttpService,
     @InjectModel(Forecast.name) private forecastModel: Model<ForecastDocument>,
   ) {}
+
+  private readonly url = this.configService.get<string>('forecastAPI.url');
+  private readonly key = this.configService.get<string>('forecastAPI.key');
 
   async fetchForecast({ name, country }: CityDocument) {
     try {

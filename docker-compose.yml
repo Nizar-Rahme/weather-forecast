@@ -8,12 +8,13 @@ services:
       target: development
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
     ports:
       - 3000:3000
     command: yarn start:dev
     env_file:
       - .env
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
     depends_on:
       - mongo
   mongo:
