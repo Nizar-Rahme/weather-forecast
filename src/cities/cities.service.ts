@@ -1,28 +1,14 @@
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { Cache } from 'cache-manager';
 
 import { ForecastService } from '../forecast/forecast.service';
 import { City, CityDocument } from './schemas/city.schema';
 import { CreateCityDto } from './dto/create-city.dto';
+import { City as ICity } from './interfaces/city.interface';
 import { SchedulerService } from '../scheduler/scheduler.service';
-
-interface Weather {
-  date: Date;
-  isLowExceeded: boolean;
-  minTemp: number;
-  updatedAt?: Date;
-}
-
-interface ICity {
-  id: ObjectId;
-  name: string;
-  country: string;
-  lowTempLimit: number;
-  forecast: Weather[];
-}
 
 const CITIES_CACHE_KEY = 'CitiesService.Cities';
 
