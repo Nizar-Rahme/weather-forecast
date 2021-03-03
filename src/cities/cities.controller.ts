@@ -1,6 +1,7 @@
 import {
   CacheInterceptor,
   Controller,
+  DefaultValuePipe,
   Get,
   HttpException,
   HttpStatus,
@@ -31,14 +32,16 @@ export class CitiesController {
   constructor(private citiesService: CitiesService) {}
 
   @Get()
-  findAll(@Query('limit', ParseIntPipe) limit: number): Promise<City[]> {
+  findAll(
+    @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit: number,
+  ): Promise<City[]> {
     return this.citiesService.findAll(limit);
   }
 
   @Get(':id')
   async findOne(
     @Param('id') id: string,
-    @Query('limit', ParseIntPipe) limit: number,
+    @Query('limit', new DefaultValuePipe(5), ParseIntPipe) limit: number,
   ): Promise<City> {
     const city = await this.citiesService.findOne(id, limit);
 
