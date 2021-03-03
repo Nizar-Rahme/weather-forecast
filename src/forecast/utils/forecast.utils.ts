@@ -1,23 +1,9 @@
 import isSameDay from 'date-fns/isSameDay';
 import { startOfDayUTC } from '../../utils/date.utils';
 import { Forecast } from '../schemas/forecast.schema';
+import { ForecastData } from '../interfaces/forecast-data.interface';
 
-interface IForecast {
-  city: {
-    name: string;
-    country: string;
-  };
-  list: [
-    {
-      main: {
-        temp_min: number;
-      };
-      dt_txt: string;
-    },
-  ];
-}
-
-export const normalizeForecastData = (data: IForecast) => {
+export const normalizeForecastData = (data: ForecastData) => {
   return data.list.reduce<Pick<Forecast, 'date' | 'minTemp'>[]>(
     (prev, item) => {
       const dateUTC = startOfDayUTC(new Date(item.dt_txt));

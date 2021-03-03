@@ -6,21 +6,7 @@ import { isValidObjectId, Model, ObjectId } from 'mongoose';
 import { CityDocument } from '../cities/schemas/city.schema';
 import { Forecast, ForecastDocument } from './schemas/forecast.schema';
 import { normalizeForecastData } from './utils/forecast.utils';
-
-interface IForecast {
-  city: {
-    name: string;
-    country: string;
-  };
-  list: [
-    {
-      main: {
-        temp_min: number;
-      };
-      dt_txt: string;
-    },
-  ];
-}
+import { ForecastData } from './interfaces/forecast-data.interface';
 
 @Injectable()
 export class ForecastService {
@@ -36,7 +22,7 @@ export class ForecastService {
   async fetchForecast({ name, country }: CityDocument) {
     try {
       const { data } = await this.httpService
-        .get<IForecast>(this.url, {
+        .get<ForecastData>(this.url, {
           params: {
             units: 'metric',
             q: `${name},${country}`,
