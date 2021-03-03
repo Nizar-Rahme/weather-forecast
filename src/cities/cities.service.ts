@@ -28,10 +28,6 @@ const CITIES_CACHE_KEY = 'CitiesService.Cities';
 
 @Injectable()
 export class CitiesService {
-  private interval = this.configService.get<number>('config.interval');
-  private lowTempLimit = this.configService.get<number>('config.lowTempLimit');
-  private cities = this.configService.get<string[][]>('config.cities');
-
   constructor(
     private configService: ConfigService,
     private forecastService: ForecastService,
@@ -54,6 +50,13 @@ export class CitiesService {
       },
     );
   }
+
+  private interval = this.configService.get<number>('config.interval', 10000);
+  private lowTempLimit = this.configService.get<number>(
+    'config.lowTempLimit',
+    0,
+  );
+  private cities = this.configService.get<string[][]>('config.cities', []);
 
   private async getCitiesDocs() {
     const cashedCities = await this.cacheManager.get<CityDocument[]>(
