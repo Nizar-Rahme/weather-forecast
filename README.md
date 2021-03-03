@@ -93,7 +93,7 @@ $ docker-compose up
 
 4. The service fetches from [Open Weather](https://openweathermap.org/forecast5) the forecast automatically when the interval specified in `.env` passes
 
-## Test
+## Testing
 
 ```bash
 # run tests
