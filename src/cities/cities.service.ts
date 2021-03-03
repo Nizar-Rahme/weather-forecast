@@ -89,12 +89,12 @@ export class CitiesService {
       .exec();
   }
 
-  async findAll(): Promise<ICity[]> {
+  async findAll(limit?: number): Promise<ICity[]> {
     const cities = await this.getCitiesDocs();
 
     return Promise.all(
       cities.map(async ({ _id: id, name, country }) => {
-        const forecastData = await this.forecastService.findByCityId(id);
+        const forecastData = await this.forecastService.findByCityId(id, limit);
 
         return {
           id,
@@ -111,8 +111,8 @@ export class CitiesService {
     );
   }
 
-  async findOne(id: string): Promise<ICity | null> {
-    const forecastData = await this.forecastService.findByCityId(id);
+  async findOne(id: string, limit?: number): Promise<ICity | null> {
+    const forecastData = await this.forecastService.findByCityId(id, limit);
 
     if (forecastData.length === 0) return null;
 

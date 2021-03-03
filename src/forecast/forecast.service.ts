@@ -2,11 +2,13 @@ import { HttpService, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model, ObjectId } from 'mongoose';
+import addDays from 'date-fns/addDays';
 
 import { CityDocument } from '../cities/schemas/city.schema';
 import { Forecast, ForecastDocument } from './schemas/forecast.schema';
 import { normalizeForecastData } from './utils/forecast.utils';
 import { ForecastData } from './interfaces/forecast-data.interface';
+import { startOfTodayUTC } from '../utils/date.utils';
 
 @Injectable()
 export class ForecastService {
@@ -57,11 +59,20 @@ export class ForecastService {
     );
   }
 
-  async findByCityId(id: string | ObjectId): Promise<ForecastDocument[]> {
+  async findByCityId(
+    id: string | ObjectId,
+    limit = 5,
+  ): Promise<ForecastDocument[]> {
     if (!isValidObjectId(id)) return [];
 
     return this.forecastModel
-      .where({ city: id })
+      .where({
+        city: id,
+        date: {
+          $gte: startOfTodayUTC(),
+          $lt: addDays(startOfTodayUTC(), limit),
+        },
+      })
       .sort({ date: 1 })
       .populate('city')
       .exec();

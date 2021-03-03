@@ -1,17 +1,16 @@
 import {
-  Body,
   CacheInterceptor,
   Controller,
   Get,
   HttpException,
   HttpStatus,
   Param,
-  Post,
+  ParseIntPipe,
+  Query,
   UseInterceptors,
 } from '@nestjs/common';
 
 import { CitiesService } from './cities.service';
-import { CreateCityDto } from './dto/create-city.dto';
 
 interface Weather {
   date: Date;
@@ -32,21 +31,19 @@ export class CitiesController {
   constructor(private citiesService: CitiesService) {}
 
   @Get()
-  findAll(): Promise<City[]> {
-    return this.citiesService.findAll();
+  findAll(@Query('limit', ParseIntPipe) limit: number): Promise<City[]> {
+    return this.citiesService.findAll(limit);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<City> {
-    const city = await this.citiesService.findOne(id);
+  async findOne(
+    @Param('id') id: string,
+    @Query('limit', ParseIntPipe) limit: number,
+  ): Promise<City> {
+    const city = await this.citiesService.findOne(id, limit);
 
     if (city) return city;
 
     throw new HttpException('Not found', HttpStatus.NOT_FOUND);
-  }
-
-  @Post()
-  async create(@Body() createCityDto: CreateCityDto) {
-    await this.citiesService.createOrUpdate(createCityDto);
   }
 }
